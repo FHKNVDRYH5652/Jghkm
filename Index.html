@@ -19,7 +19,6 @@
 
         body, html { height: 100%; width: 100%; background: #000; overflow: hidden; color: white; }
 
-        /* --- Entry Screen --- */
         #entry-screen {
             position: fixed; width: 100%; height: 100%; 
             background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('mickey.png') no-repeat center center/cover;
@@ -40,7 +39,6 @@
             transition: 0.3s;
         }
 
-        /* --- Floating Draggable Button --- */
         #floating-circle {
             display: none; position: fixed; top: 70%; right: 20px;
             width: 70px; height: 70px; z-index: 10000; cursor: move;
@@ -51,71 +49,40 @@
             display: flex; justify-content: center; align-items: center;
         }
 
-        /* --- Mickey Hack Panel --- */
         .panel-box {
             display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
             width: 280px; background: var(--panel-bg); 
-            border: 1px solid #333;
-            z-index: 10001; text-align: center;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
-            border-radius: 2px;
+            border: 1px solid #333; z-index: 10001; text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8); border-radius: 2px;
         }
 
         .fixer-tag {
-            font-weight: 900; font-size: 24px;
-            padding: 15px 0 5px 0; display: block;
+            font-weight: 900; font-size: 24px; padding: 15px 0 5px 0; display: block;
             background: linear-gradient(to right, #4e54c8, #8f94fb, #ff416c);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-transform: uppercase;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase;
         }
 
         .prediction-box {
-            background: #000; 
-            width: 100%; 
-            margin: 0 auto;
-            padding: 35px 10px; 
-            border-top: 1px solid #1a1a1a;
-            border-bottom: 1px solid #1a1a1a;
-            font-size: 32px; 
-            font-weight: 900;
-            letter-spacing: 1px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 150px;
-            text-align: center;
+            background: #000; width: 100%; margin: 0 auto; padding: 30px 10px; 
+            border-top: 1px solid #1a1a1a; border-bottom: 1px solid #1a1a1a;
+            font-size: 22px; font-weight: 900; letter-spacing: 1px;
+            display: flex; align-items: center; justify-content: center;
+            min-height: 150px; text-align: center; line-height: 1.4;
         }
 
         .instruction-text {
-            font-size: 16px;
-            color: #ff416c;
-            line-height: 1.4;
-            padding: 10px;
+            font-size: 16px; color: #ff416c; line-height: 1.4; padding: 10px;
             text-shadow: 0 0 5px rgba(255, 65, 108, 0.5);
         }
 
-        .period-container {
-            padding: 8px 0;
-            background: #000;
-        }
-
-        .period-text { 
-            color: #ffbc00; 
-            font-size: 11px; 
-            font-weight: bold;
-        }
-        
+        .period-container { padding: 8px 0; background: #000; }
+        .period-text { color: #ffbc00; font-size: 11px; font-weight: bold; }
         #game-period-id { color: #00ff00; font-size: 13px; }
 
-        /* --- Bottom Buttons Design --- */
         .footer-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; }
-        
         .footer-btn { 
-            padding: 12px 5px; background: #000; 
-            color: #7000ff; border: 1px solid #1a1a1a;
-            font-weight: 900; cursor: pointer; font-size: 14px;
-            text-transform: uppercase;
+            padding: 12px 5px; background: #000; color: #7000ff; border: 1px solid #1a1a1a;
+            font-weight: 900; cursor: pointer; font-size: 14px; text-transform: uppercase;
             background: linear-gradient(to bottom, #111, #000);
         }
 
@@ -124,15 +91,11 @@
         .btn-hide { color: #4e54c8; }
 
         .suresort-btn-large {
-            grid-column: span 3;
-            background: #000;
-            color: var(--premium-gold);
-            border: 1px solid #1a1a1a;
-            padding: 15px; font-size: 14px; letter-spacing: 1px;
-            font-weight: bold;
+            grid-column: span 3; background: #000; color: var(--premium-gold);
+            border: 1px solid #1a1a1a; padding: 15px; font-size: 14px;
+            letter-spacing: 1px; font-weight: bold;
         }
 
-        /* --- Frame --- */
         #game-frame { display: none; width: 100%; height: 100%; border: none; }
         
         #payment-box {
@@ -166,13 +129,13 @@
     <div id="mickey-panel" class="panel-box">
         <div class="fixer-tag">1 LEVEL FIXER</div>
         
-        <div class="prediction-box" id="prediction-text" style="color: #ffbc00;">WAIT...</div>
+        <div class="prediction-box" id="prediction-text">WAIT...</div>
         
         <div class="period-container">
             <span class="period-text">NEXT PERIOD: <span id="game-period-id">LOADING...</span></span>
         </div>
         
-        <div id="action-buttons" class="footer-grid">
+        <div class="footer-grid">
             <button class="footer-btn btn-exit" onclick="toggleMickeyPanel()">EXIT</button>
             <button class="footer-btn btn-change" id="change-btn" onclick="generatePrediction()">CHANGE</button>
             <button class="footer-btn btn-hide" onclick="toggleMickeyPanel()">HIDE</button>
@@ -186,7 +149,6 @@
         <p>Activation Fee: ₹199</p>
         <input type="text" id="utr" style="width:100%; padding:10px; margin:10px 0; background:#000; color:#fff; border:1px solid #444;" placeholder="Enter Ref/UTR No.">
         <button class="main-btn" style="width:100%; margin:0;" onclick="fakeProcess()">VERIFY PAYMENT</button>
-        
         <div id="loading-overlay" class="loading-overlay">
             <i class="fas fa-sync fa-spin" style="font-size: 40px; color: gold;"></i>
             <p style="margin-top: 10px;">Verifying...</p>
@@ -196,7 +158,7 @@
     <script>
         const API_URL = "https://draw.ar-lottery01.com/WinGo/WinGo_1M/GetHistoryIssuePage.json";
         let isLocked = true;
-        const LOCK_TIME = 180000; // 3 minutes
+        const LOCK_TIME = 180000; // 3 Minutes
 
         async function fetchLivePeriod() {
             try {
@@ -205,65 +167,59 @@
                 if (data && data.data && data.data.list && data.data.list.length > 0) {
                     const latestIssue = data.data.list[0].issueNumber;
                     const nextPeriod = (BigInt(latestIssue) + 1n).toString();
-                    const periodElement = document.getElementById('game-period-id');
-                    if (periodElement.innerText !== nextPeriod) {
-                        periodElement.innerText = nextPeriod;
-                    }
+                    document.getElementById('game-period-id').innerText = nextPeriod;
                 }
-            } catch (error) { console.error("API Error:", error); }
+            } catch (e) { console.error("API Error"); }
         }
 
         function generatePrediction() {
             if(isLocked) return;
 
             const predText = document.getElementById('prediction-text');
-            predText.innerText = "WAIT...";
+            predText.innerText = "ANALYZING...";
             predText.style.color = "#ffbc00";
 
             setTimeout(() => {
                 const colors = ["GREEN", "RED"];
+                const sizes = ["BIG", "SMALL"];
+                
                 const selectedColor = colors[Math.floor(Math.random() * colors.length)];
+                const selectedSize = sizes[Math.floor(Math.random() * sizes.length)];
                 
                 let numbers = [];
                 if(selectedColor === "GREEN") {
                     const greenNums = [1, 3, 5, 7, 9];
-                    // Pick 2 random unique numbers from green set
                     const shuffled = greenNums.sort(() => 0.5 - Math.random());
                     numbers = [shuffled[0], shuffled[1]].sort();
                     predText.style.color = "#00ff00";
                 } else {
                     const redNums = [0, 2, 4, 6, 8];
-                    // Pick 2 random unique numbers from red set
                     const shuffled = redNums.sort(() => 0.5 - Math.random());
                     numbers = [shuffled[0], shuffled[1]].sort();
                     predText.style.color = "#ff416c";
                 }
 
-                predText.innerText = `${selectedColor} ${numbers[0]}/${numbers[1]}`;
-                fetchLivePeriod(); 
-            }, 400);
+                predText.innerHTML = `${selectedColor} / ${selectedSize}<br>(${numbers[0]}/${numbers[1]})`;
+                fetchLivePeriod();
+            }, 600);
         }
 
-        setInterval(fetchLivePeriod, 2000);
-
-        // --- Dragging Logic ---
+        // Drag Logic
         const floatBtn = document.getElementById('floating-circle');
-        let isDragging = false;
-        let currentX, currentY, initialX, initialY, xOffset = 0, yOffset = 0;
+        let isDragging = false, xOffset = 0, yOffset = 0, initialX, initialY;
 
         floatBtn.addEventListener("touchstart", (e) => {
             initialX = e.touches[0].clientX - xOffset;
             initialY = e.touches[0].clientY - yOffset;
             isDragging = false;
-        }, false);
-        floatBtn.addEventListener("touchend", () => { initialX = currentX; initialY = currentY; }, false);
+        });
         floatBtn.addEventListener("touchmove", (e) => {
             isDragging = true; e.preventDefault();
-            currentX = e.touches[0].clientX - initialX;
-            currentY = e.touches[0].clientY - initialY;
+            const currentX = e.touches[0].clientX - initialX;
+            const currentY = e.touches[0].clientY - initialY;
             xOffset = currentX; yOffset = currentY;
-            floatBtn.style.transform = "translate3d(" + currentX + "px, " + currentY + "px, 0)";
-        }, false);
+            floatBtn.style.transform = `translate3d(${currentX}px, ${currentY}px, 0)`;
+        });
         floatBtn.addEventListener("click", () => { if(!isDragging) toggleMickeyPanel(); });
 
         function startApp() {
@@ -272,19 +228,23 @@
             document.getElementById('game-frame').style.display = 'block';
             document.getElementById('floating-circle').style.display = 'flex';
             
+            fetchLivePeriod();
+            setInterval(fetchLivePeriod, 2000);
+
+            // Start Hidden Countdown
             setTimeout(() => {
                 isLocked = false;
                 if(document.getElementById('mickey-panel').style.display === 'block') {
+                    document.getElementById('change-btn').style.opacity = "1";
                     generatePrediction();
                 }
             }, LOCK_TIME);
-            fetchLivePeriod();
         }
 
         function toggleMickeyPanel() {
-            let p = document.getElementById('mickey-panel');
-            let predText = document.getElementById('prediction-text');
-            let changeBtn = document.getElementById('change-btn');
+            const p = document.getElementById('mickey-panel');
+            const predText = document.getElementById('prediction-text');
+            const changeBtn = document.getElementById('change-btn');
 
             if (p.style.display === 'block') {
                 p.style.display = 'none';
@@ -302,20 +262,17 @@
         }
 
         function openPayment() { document.getElementById('payment-box').style.display = 'block'; }
-
         function fakeProcess() {
-            if(document.getElementById('utr').value.length < 10) {
-                alert("Please enter valid UTR!");
-                return;
-            }
+            if(document.getElementById('utr').value.length < 10) { alert("Invalid UTR!"); return; }
             document.getElementById('loading-overlay').style.display = 'flex';
             setTimeout(() => {
                 document.getElementById('loading-overlay').style.display = 'none';
                 document.getElementById('payment-box').style.display = 'none';
-                alert("Activation Successful! Suresort Mode On.");
-                document.querySelector('.suresort-btn-large').innerText = "SURESORT ACTIVE";
-                document.querySelector('.suresort-btn-large').style.color = "lime";
-            }, 4000);
+                alert("Suresort Active!");
+                const sBtn = document.querySelector('.suresort-btn-large');
+                sBtn.innerText = "SURESORT ACTIVE";
+                sBtn.style.color = "lime";
+            }, 3000);
         }
     </script>
 </body>
